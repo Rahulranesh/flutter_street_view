@@ -1,47 +1,31 @@
-group 'zyz.flutter.plugin.flutter_google_street_view'
-version '1.0-SNAPSHOT'
-
-buildscript {
-    ext.kotlin_version = '1.6.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
-
-rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
-    namespace = "zyz.flutter.plugin.flutter_google_street_view"
-    compileSdkVersion 34
+    compileSdk 34
+    namespace "zyz.flutter.plugin.flutter_google_street_view"
+
+    defaultConfig {
+        minSdk 19
+        targetSdk 34
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    defaultConfig {
-        minSdkVersion 19
-    }
+
     lintOptions {
         disable 'InvalidPackage'
     }
+
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
             jvmTarget = "1.8"
         }
@@ -49,10 +33,9 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10"
     implementation 'androidx.annotation:annotation:1.1.0'
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    //compileOnly files('libs/flutter.jar')
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 }
